@@ -1,7 +1,7 @@
 #include "Application.h"
-#include <CommCtrl.h>
 
 #include "Window.h"
+#include "ItemMover.h"
 
 
 Application::Application(Window* window) :
@@ -20,9 +20,7 @@ void Application::Stop() {
 }
 
 void Application::MessageLoop() {
-	HWND desktopHwnd = GetDesktopWindow();
-	int num = ListView_GetItemCount(desktopHwnd);
-	
+	ItemMover itemMover = ItemMover(window_);
 
 	while (running_) {
 		if (PeekMessage(&message_, NULL, NULL, NULL, PM_REMOVE)) {
@@ -31,6 +29,10 @@ void Application::MessageLoop() {
 
 			running_ = message_.message != WM_QUIT;
 		}
+
+		itemMover.RetrieveItemCount();
+		itemMover.RetrieveItemPositions();
+		itemMover.MoveItems();
 
 		Sleep(1);
 	}

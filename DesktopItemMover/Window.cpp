@@ -20,8 +20,8 @@ Window::Window(HINSTANCE hInstance, int nCmdShow) :
 
 	RegisterClassEx(&wndClass);
 
-	HWND hwnd = CreateWindowEx(WS_EX_CLIENTEDGE, wndClass.lpszClassName, "Desktop Item mover", WS_SYSMENU | WS_SIZEBOX, 200, 200, 200, 200, NULL, NULL, NULL, NULL);
-	ShowWindow(hwnd, nCmdShow);
+	hwnd_ = CreateWindowEx(WS_EX_CLIENTEDGE, wndClass.lpszClassName, "Desktop Item mover", WS_SYSMENU | WS_SIZEBOX, 200, 200, 200, 200, NULL, NULL, NULL, NULL);
+	ShowWindow(hwnd_, nCmdShow);
 }
 
 Window::~Window() { }

@@ -4,9 +4,11 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ItemMover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ItemMover.h" />
   </ItemGroup>
 </Project>
