@@ -21,3 +21,5 @@ private:
 	MSG message_;
 	class Window* window_;
 };
+
+unsigned __stdcall ThreadLoop(void*);
