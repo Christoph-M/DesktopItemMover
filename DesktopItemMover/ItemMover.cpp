@@ -77,21 +77,21 @@ void ItemMover::MoveItems() {
 				POINT dir = { itemCenter.x - windowCenter.x, itemCenter.y - windowCenter.y };
 
 				if (abs(dir.x) > abs(dir.y)) {
-					items_[i].x += dir.x - ((dir.x < 0) ? iconSize_ : 0);
+					items_[i].x += (iconSize_ * 2) * dir.x / abs(dir.x);
 				} else {
-					items_[i].y += dir.y - ((dir.y < 0) ? iconSize_ : 0);
+					items_[i].y += (iconSize_ * 2) * dir.y / abs(dir.y);
 				}
 
-				if (items_[i].x < 0) {
-					items_[i].x -= dir.x;
-				} else if (items_[i].x + iconSize_ > screenWidth_) {
-					items_[i].x -= dir.x - iconSize_;
+				if (items_[i].x < 40) {
+					items_[i].x += (iconSize_ * 2);
+				} else if (items_[i].x + iconSize_ > screenWidth_ - 64) {
+					items_[i].x -= (iconSize_ * 2);
 				}
 
-				if (items_[i].y < 0) {
-					items_[i].y -= dir.y;
-				} else if (items_[i].y + iconSize_ > screenHeight_) {
-					items_[i].y -= dir.y - iconSize_;
+				if (items_[i].y < 40) {
+					items_[i].y += (iconSize_ * 2);
+				} else if (items_[i].y + iconSize_ > screenHeight_ - 64) {
+					items_[i].y -= (iconSize_ * 2);
 				}
 
 
