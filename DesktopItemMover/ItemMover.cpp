@@ -43,7 +43,7 @@ bool ItemMover::RetrieveItemCount() {
 
 	if (newCount > oldCount) {
 		for (int i = 0; i < newCount - oldCount; ++i) {
-			Item newItem = {};
+			Item newItem = { };
 			newItem.index = -1;
 			newItem.pos = { 0 };
 			newItem.itemLeft = nullptr;
@@ -72,7 +72,7 @@ void ItemMover::RetrieveItemPositions() {
 	}
 
 	VirtualFreeEx(explorer_, pCoords, 0, MEM_RELEASE);
-
+	
 	this->GetNeighbours();
 }
 
@@ -98,7 +98,7 @@ void ItemMover::GetNeighbours() {
 }
 
 void ItemMover::MoveItems() {
-	for (int i = itemCount_ - 1; i >= 0; --i) {
+	for (int i = 0; i < itemCount_; ++i) {
 		if (items_[i].pos.x >= 0 && items_[i].pos.y >= 0) {
 			POINT itemTopLeft = { items_[i].pos.x, items_[i].pos.y };
 			POINT itemBottomRight = { items_[i].pos.x + itemSize_.x, items_[i].pos.y + itemSize_.y };
@@ -131,15 +131,31 @@ void ItemMover::SetItem(Item* item) {
 
 void ItemMover::SetPosOnScreen(Item* item) {
 	if (item->pos.x < 36) {
-		item->pos.x += itemSize_.x * 2;
-	} else if (item->pos.x + itemSize_.x > screenWidth_ - itemSize_.x) {
-		item->pos.x -= itemSize_.x * 2;
+		item->pos.x += itemSize_.x;
+		item->pos.y += itemSize_.y;
+		if (item->pos.y >= screenHeight_ - itemSize_.y - 2) {
+			item->pos.y -= itemSize_.y * 2;
+		}
+	} else if (item->pos.x >= screenWidth_ - itemSize_.x - 36) {
+		item->pos.x -= itemSize_.x;
+		item->pos.y -= itemSize_.y;
+		if (item->pos.y < 2) {
+			item->pos.y += itemSize_.y * 2;
+		}
 	}
 
 	if (item->pos.y < 2) {
-		item->pos.y += itemSize_.y * 2;
-	} else if (item->pos.y + itemSize_.y > screenHeight_ - itemSize_.y) {
-		item->pos.y -= itemSize_.y * 2;
+		item->pos.y += itemSize_.y;
+		item->pos.x -= itemSize_.x;
+		if (item->pos.x < 36) {
+			item->pos.x += itemSize_.x * 2;
+		}
+	} else if (item->pos.y >= screenHeight_ - itemSize_.y - 2) {
+		item->pos.y -= itemSize_.y;
+		item->pos.x += itemSize_.x;
+		if (item->pos.x >= screenWidth_ - itemSize_.x - 36) {
+			item->pos.x -= itemSize_.x * 2;
+		}
 	}
 }
 
