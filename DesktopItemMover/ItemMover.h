@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <vector>
 
 
 class ItemMover {
@@ -16,6 +17,21 @@ public:
 	~ItemMover();
 
 private:
+	struct Item {
+		int index;
+		POINT pos;
+		Item* itemLeft;
+		Item* itemRight;
+		Item* itemTop;
+		Item* itemBottom;
+	};
+
+private:
+	void GetNeighbours();
+	void SetItem(Item*);
+	void SetPosOnScreen(Item*);
+	void CheckNeighbours(Item*);
+
 	void ReadRegistryString(HKEY, char*, char*, char*);
 
 private:
@@ -27,7 +43,8 @@ private:
 	DWORD processID_;
 	unsigned short itemCount_;
 	int iconSize_;
+	POINT itemSize_;
 	unsigned short screenWidth_;
 	unsigned short screenHeight_;
-	POINT* items_;
+	std::vector<Item> items_;
 };

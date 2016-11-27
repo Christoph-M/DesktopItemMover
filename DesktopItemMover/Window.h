@@ -6,7 +6,7 @@ LRESULT CALLBACK WindowProcedure(HWND, UINT, WPARAM, LPARAM);
 
 class Window {
 public:
-	Window(HINSTANCE, int);
+	Window();
 
 
 	HWND Hwnd() { return hwnd_; }

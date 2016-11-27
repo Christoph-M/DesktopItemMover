@@ -1,7 +1,7 @@
 #include "Window.h"
 
 
-Window::Window(HINSTANCE hInstance, int nCmdShow) :
+Window::Window() :
 	wndClassEx_(WNDCLASSEX{ 0 }),
 	hwnd_(NULL)
 {
@@ -10,7 +10,7 @@ Window::Window(HINSTANCE hInstance, int nCmdShow) :
 		wndClass.style = CS_DROPSHADOW;
 		wndClass.lpfnWndProc = WindowProcedure;
 		wndClass.cbClsExtra = NULL;
-		wndClass.hInstance = hInstance;
+		wndClass.hInstance = GetModuleHandle(NULL);
 		wndClass.hIcon = NULL;
 		wndClass.hCursor = NULL;
 		wndClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
@@ -21,7 +21,7 @@ Window::Window(HINSTANCE hInstance, int nCmdShow) :
 	RegisterClassEx(&wndClass);
 
 	hwnd_ = CreateWindowEx(WS_EX_CLIENTEDGE, wndClass.lpszClassName, "Desktop Item mover", WS_SYSMENU | WS_SIZEBOX, 200, 200, 200, 200, NULL, NULL, NULL, NULL);
-	ShowWindow(hwnd_, nCmdShow);
+	ShowWindow(hwnd_, SW_SHOW);
 }
 
 Window::~Window() { }
