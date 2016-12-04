@@ -8,7 +8,7 @@ public:
 
 
 	void Start();
-	void Stop();
+	static void Stop();
 
 
 	~Application();

@@ -9,7 +9,7 @@ public:
 	Window();
 
 
-	HWND Hwnd() { return hwnd_; }
+	HWND Hwnd() const { return hwnd_; }
 
 
 	~Window();

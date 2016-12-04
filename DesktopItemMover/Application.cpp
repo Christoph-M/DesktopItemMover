@@ -27,7 +27,7 @@ void Application::Stop() {
 
 void Application::MessageLoop() {
 	HANDLE hThread;
-	hThread = (HANDLE)_beginthreadex(NULL, 0, ThreadLoop, &running_, 0, NULL);
+	hThread = reinterpret_cast<HANDLE>(_beginthreadex(NULL, 0, ThreadLoop, &running_, 0, NULL));
 
 	while (running_) {
 		if (PeekMessage(&message_, NULL, NULL, NULL, PM_REMOVE)) {
@@ -44,7 +44,7 @@ void Application::MessageLoop() {
 }
 
 unsigned __stdcall ThreadLoop(void* params) {
-	bool* running = (bool*)params;
+	bool* running = static_cast<bool*>(params);
 	ItemMover itemMover = ItemMover(g_Window);
 
 	while (*running) {

@@ -13,7 +13,7 @@ Window::Window() :
 		wndClass.hInstance = GetModuleHandle(NULL);
 		wndClass.hIcon = NULL;
 		wndClass.hCursor = NULL;
-		wndClass.hbrBackground = (HBRUSH)COLOR_WINDOW;
+		wndClass.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW);
 		wndClass.lpszMenuName = NULL;
 		wndClass.lpszClassName = "DesktopItemMover";
 		wndClass.hIconSm = NULL;

@@ -29,10 +29,10 @@ private:
 private:
 	void GetNeighbours();
 	void SetItem(Item*);
-	void SetPosOnScreen(Item*);
+	void SetPosOnScreen(Item*) const;
 	void CheckNeighbours(Item*);
 
-	void ReadRegistryString(HKEY, char*, char*, char*);
+	void ReadRegistryString(HKEY, char*, char*, char*) const;
 
 private:
 	class Window* window_;

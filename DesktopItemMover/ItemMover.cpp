@@ -1,7 +1,5 @@
 #include "ItemMover.h"
 #include <CommCtrl.h>
-#include <cmath>
-#include <cstdio>
 
 #include "Window.h"
 
@@ -60,12 +58,12 @@ bool ItemMover::RetrieveItemCount() {
 }
 
 void ItemMover::RetrieveItemPositions() {
-	POINT* pCoords = (POINT*)VirtualAllocEx(explorer_, NULL, sizeof(POINT), MEM_COMMIT, PAGE_READWRITE);
+	POINT* pCoords = static_cast<POINT*>(VirtualAllocEx(explorer_, NULL, sizeof(POINT), MEM_COMMIT, PAGE_READWRITE));
 	WriteProcessMemory(explorer_, pCoords, &pCoords, sizeof(POINT), NULL);
 
 	POINT pt;
 	for (int i = 0; i < itemCount_; ++i) {
-		SendMessage(hwnd_, LVM_GETITEMPOSITION, (WPARAM)i, (LPARAM)pCoords);
+		SendMessage(hwnd_, LVM_GETITEMPOSITION, static_cast<WPARAM>(i), reinterpret_cast<LPARAM>(pCoords));
 		ReadProcessMemory(explorer_, pCoords, &pt, sizeof(POINT), NULL);
 		items_[i].index = i;
 		items_[i].pos = pt;
@@ -129,7 +127,7 @@ void ItemMover::SetItem(Item* item) {
 	SendMessage(hwnd_, LVM_SETITEMPOSITION, (WPARAM)item->index, MAKELPARAM((int)item->pos.x, (int)item->pos.y));
 }
 
-void ItemMover::SetPosOnScreen(Item* item) {
+void ItemMover::SetPosOnScreen(Item* item) const {
 	if (item->pos.x < 36) {
 		item->pos.x += itemSize_.x;
 		item->pos.y += itemSize_.y;
@@ -176,7 +174,7 @@ void ItemMover::CheckNeighbours(Item* item) {
 }
 
 
-void ItemMover::ReadRegistryString(HKEY hKeyMom, char* pKeyName, char* pValName, char* pValData) {
+void ItemMover::ReadRegistryString(HKEY hKeyMom, char* pKeyName, char* pValName, char* pValData) const {
 	HKEY hKey = 0;
 	DWORD dw;
 
